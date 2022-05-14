@@ -1,8 +1,20 @@
-const { v4: getNewID } = require('uuid'); //For generating ID's
+const mongoose = require('mongoose');
 
-let beers = [
+//Step 3 : Create Models, schema, and require it.
+const Beer = require('./models/Beer');
+
+mongoose.connect('mongodb://localhost:27017/beerInventory')
+    .then(() => {
+        console.log("MONGO CONNECTION Open");
+    })
+    .catch(err => {
+        console.log("there's an MONGO ERROR");
+        console.log(err);
+    });
+
+let seedBeers = [
     {
-        id: getNewID(),
+        // id: getNewID(),
         name: "Michel BEld'Am",
         style: "IPA",
         qty: 10,
@@ -10,7 +22,7 @@ let beers = [
         description: ""
     },
     {
-        id: getNewID(),
+        // id: getNewID(),
         name: "Henriette's Secret",
         style: "Sour",
         qty: 10,
@@ -18,7 +30,7 @@ let beers = [
         description: ""
     },
     {
-        id: getNewID(),
+        // id: getNewID(),
         name: "Yuzu Sobaki",
         style: "Saison",
         qty: 10,
@@ -26,7 +38,7 @@ let beers = [
         description: ""
     },
     {
-        id: getNewID(),
+        // id: getNewID(),
         name: "Love Potion",
         style: "Wheat",
         qty: 10,
@@ -51,4 +63,8 @@ const styles = [
     "Other"
 ];
 
-module.exports = { beers, styles };
+// module.exports = { beers, styles };
+
+Beer.insertMany(seedBeers)
+    .then(res => console.log(res))
+    .catch(err => console.log(err));

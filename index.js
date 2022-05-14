@@ -6,9 +6,18 @@ const { v4: getNewID } = require('uuid'); //For generating ID's
 const mongoose = require('mongoose');
 
 // import { beers } from './seed';
-let { beers, styles } = require('./seed.js');
+// let { beers, styles } = require('./seed.js');
 
-let Beer = require('./models/Beer');
+const Beer = require('./models/Beer');
+
+mongoose.connect('mongodb://localhost:27017/beerInventory', { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log("MONGO CONNECTION OPEN!!!");
+    })
+    .catch(err => {
+        console.log("OH NO MONGO CONNECTION ERROR!!!!");
+        console.log(err);
+    });
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -50,9 +59,8 @@ app.patch('/beers/:id', (req, res) => {
     console.log(newInfo);
     let beer = beers.find(beer => beer.id === id);
     console.log(beer);
-    // beer = { ...beer, ...newInfo };
+    //to update the object's value
     Object.assign(beer, newInfo);
-    // Object.keys(newInfo).forEach(key => beer[key] = newInfo[key]);
     console.log(beer);
     // beers.push(newBeer);
     res.redirect(`/beers/${id}`);
