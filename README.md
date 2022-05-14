@@ -1,2 +1,2 @@
-# beer-inventory-CRUD2
+# beer-inventory-CRUD
 A simple CRUD app to manage inventory
