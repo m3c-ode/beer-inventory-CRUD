@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= name %> - Details </title>
+    <link rel="stylesheet" href="/details.css">
+</head>
+
+<body>
+    <h1><%= name %> - Details</h1>
+    <section>
+        <h3>Style: </h3>
+        <span><%= style %></span>
+    </section>
+    <section>
+        <h3>Quantity in stock: </h3>
+        <span><%= qty %></span>
+    </section>
+    <section>
+        <h3>Price per unit: </h3>
+        <span><%= price %></span>
+    </section>
+    <br>
+    <h3>Description: </h3>
+    <p><%= description %> </p>
+
+    <br>
+    <br>
+
+    <a href="/beers/<%= id %>/update">Edit details</a> <br>
+    <a href="/">Back to beer list</a>
+</body>
+
+</html>
