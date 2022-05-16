@@ -10,30 +10,24 @@
 
 <body>
     <script src="" type="text/javascript">
-        function addBeer(params) {
+        // function addBeer(params) {
 
-        }
+        // }
     </script>
     <h1>Deliver some beers</h1>
-    <section>
-        <label for="beer">Choose beer: </label>
-        <select name="beer" id="beer">
-            <% for (const beer of beers) { %>
-            <option value="<%= beer %>"><%= beer %></option>
-            <% } %>
-        </select>
-    </section>
-    <button onclick="<% addBeer() %>">Add beer</button>
-    <% if (addBeer) { %>
-    <section>
-        <label for="beer">Choose beer: </label>
-        <select name="beer" id="beer">
-            <% for (const beer of beers) { %>
-            <option value="<%= beer %>"><%= beer %></option>
-            <% } %>
-        </select>
-    </section>
-    <% } %>
+    <form action="/?_method=PATCH" method="post">
+        <% for (const beer of beers) { %>
+        <section>
+            <h3><%= beer.name %></h3>
+            <section>
+                <p>Quantity in stock: <span><%= beer.qty %></span></p>
+                <label for="shipqty">Amount to ship: </label>
+                <input type="number" name="shipqty" id="shipqty" min="0" max="<%= beer.qty %>">
+            </section>
+        </section>
+        <% } %>
+        <button>Ship</button>
+    </form>
 </body>
 
 </html>

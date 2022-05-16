@@ -1,3 +1,6 @@
+#Beer models and class without DB
+models/
+
 # Logs
 logs
 *.log
