@@ -6,7 +6,7 @@ const { v4: getNewID } = require('uuid'); //For generating ID's
 
 let { beers, styles } = require('./seed.js');
 
-let Beer = require('./models/Beer');
+// let Beer = require('./models/Beer');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
