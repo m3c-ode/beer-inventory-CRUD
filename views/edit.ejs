@@ -10,7 +10,7 @@
 
 <body>
     <h1>Edit <%= beer.name %> beer details</h1>
-    <form action="/beers/<%= beer.id %>?_method=PATCH" method="post">
+    <form action="/beers/<%= beer.id %>?_method=PUT" method="post">
         <section>
             <label for="name">Enter beer name: </label>
             <input type="text" name="name" id="name" placeholder="Beer Name" value="<%= beer.name %>">

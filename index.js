@@ -25,6 +25,10 @@ app.get('/newBeer', (req, res) => {
     res.render('create', { styles });
 });
 
+app.get('/delivery', (req, res) => {
+    res.render('delivery', { beers, styles });
+});
+
 app.get('/beers/:id', async (req, res) => {
     const { id } = req.params;
     const beer = await beers.find(beer => beer.id === id);
@@ -40,6 +44,17 @@ app.get('/beers/:id/update', async (req, res) => {
     res.render('edit', { beer, styles });
 });
 
+app.patch('/', async (req, res) => {
+    const { shipqty } = req.body;
+    beers.forEach((beer, index) => {
+        if (shipqty[index] === "") shipqty[index] = 0;
+        if (isNaN(beer.qty)) parseInt(beer.qty);
+        beer.qty -= shipqty[index];
+    });
+    res.redirect("/");
+
+});
+
 app.delete('/beers/:id', async (req, res) => {
     const { id } = req.params;
     //Filter the beer array with all beers but the id selected
@@ -47,7 +62,7 @@ app.delete('/beers/:id', async (req, res) => {
     res.redirect('/');
 });
 
-app.patch('/beers/:id', (req, res) => {
+app.put('/beers/:id', (req, res) => {
     const { id } = req.params;
     const { name, style, qty, price, description } = req.body;
     const newInfo = { name, style, qty, price, description };
@@ -65,7 +80,9 @@ app.patch('/beers/:id', (req, res) => {
 
 
 app.post('/', (req, res) => {
+    //convert qty and price to int?
     console.log(req.body);
+    // req.body.qty = parseInt(req.body.qty);
     const newBeer = req.body;
     beers.push({ ...newBeer, id: getNewID() });
     res.redirect('/');
