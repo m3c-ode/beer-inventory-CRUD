@@ -16,19 +16,23 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Home page with list of beers
 app.get('/', (req, res) => {
     // res.send('Welcome to the 1st page');
     res.render('index', { beers });
 });
 
+//Form to create a new beer
 app.get('/newBeer', (req, res) => {
     res.render('create', { styles });
 });
 
+//Page for the delivery form
 app.get('/delivery', (req, res) => {
     res.render('delivery', { beers, styles });
 });
 
+//Page to show the details of each product
 app.get('/beers/:id', async (req, res) => {
     const { id } = req.params;
     const beer = await beers.find(beer => beer.id === id);
@@ -36,6 +40,7 @@ app.get('/beers/:id', async (req, res) => {
     res.render('details', { ...beer });
 });
 
+//Form to edit the beer's information
 app.get('/beers/:id/update', async (req, res) => {
     const { id } = req.params;
     const beer = await beers.find(beer => beer.id === id);
@@ -44,6 +49,7 @@ app.get('/beers/:id/update', async (req, res) => {
     res.render('edit', { beer, styles });
 });
 
+//Will fix the inventory depending on the shipments
 app.patch('/', async (req, res) => {
     const { shipqty } = req.body;
     beers.forEach((beer, index) => {
@@ -55,6 +61,7 @@ app.patch('/', async (req, res) => {
 
 });
 
+//Route to delete beer
 app.delete('/beers/:id', async (req, res) => {
     const { id } = req.params;
     //Filter the beer array with all beers but the id selected
@@ -66,16 +73,10 @@ app.put('/beers/:id', (req, res) => {
     const { id } = req.params;
     const { name, style, qty, price, description } = req.body;
     const newInfo = { name, style, qty, price, description };
-    // const newBeer = new Beer(id = getNewID(), name, type, qty, price, description);
-    console.log(newInfo);
     let beer = beers.find(beer => beer.id === id);
-    console.log(beer);
     //to update the object's value
     Object.assign(beer, newInfo);
-    console.log(beer);
-    // beers.push(newBeer);
     res.redirect(`/beers/${id}`);
-
 });
 
 
@@ -88,6 +89,7 @@ app.post('/', (req, res) => {
     res.redirect('/');
 });
 
+//App will run on port 3001
 app.listen(3001, () => {
     console.log("APP Listening on PORT 3001");
 });
