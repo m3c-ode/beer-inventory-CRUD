@@ -3,9 +3,7 @@ const app = express();
 const path = require('path');
 const methodOverride = require('method-override');
 const { v4: getNewID } = require('uuid'); //For generating ID's
-const mongoose = require('mongoose');
 
-// import { beers } from './seed';
 let { beers, styles } = require('./seed.js');
 
 let Beer = require('./models/Beer');
@@ -42,17 +40,23 @@ app.get('/beers/:id/update', async (req, res) => {
     res.render('edit', { beer, styles });
 });
 
+app.delete('/beers/:id', async (req, res) => {
+    const { id } = req.params;
+    //Filter the beer array with all beers but the id selected
+    beers = beers.filter(beer => beer.id !== id);
+    res.redirect('/');
+});
+
 app.patch('/beers/:id', (req, res) => {
     const { id } = req.params;
-    const { name, type, qty, price, description } = req.body;
-    const newInfo = { name, type, qty, price, description };
+    const { name, style, qty, price, description } = req.body;
+    const newInfo = { name, style, qty, price, description };
     // const newBeer = new Beer(id = getNewID(), name, type, qty, price, description);
     console.log(newInfo);
     let beer = beers.find(beer => beer.id === id);
     console.log(beer);
-    // beer = { ...beer, ...newInfo };
+    //to update the object's value
     Object.assign(beer, newInfo);
-    // Object.keys(newInfo).forEach(key => beer[key] = newInfo[key]);
     console.log(beer);
     // beers.push(newBeer);
     res.redirect(`/beers/${id}`);

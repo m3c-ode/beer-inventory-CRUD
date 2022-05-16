@@ -11,8 +11,13 @@
 <body>
     <h1>m3.Beer - All products</h1>
     <% for (const beer of beers) { %>
-    <li> <a href="/beers/<%= beer.id %>"><%= beer.name %></a> </li>
+    <li> <a href="/beers/<%= beer.id %>"><%= beer.name %></a> Quantity left: <%= beer.qty %> Unit price:
+        $<%= beer.price %> </li>
     <% } %>
+    <br>
+    <a href="/newBeer">Add a new beer</a>
+    <br><br>
+    <a href="/delivery"> Create a delivery</a>
 </body>
 
 </html>
