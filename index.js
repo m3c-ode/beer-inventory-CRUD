@@ -36,7 +36,6 @@ app.get('/delivery', (req, res) => {
 app.get('/beers/:id', async (req, res) => {
     const { id } = req.params;
     const beer = await beers.find(beer => beer.id === id);
-    // console.log(beer);
     res.render('details', { ...beer });
 });
 
@@ -44,8 +43,6 @@ app.get('/beers/:id', async (req, res) => {
 app.get('/beers/:id/update', async (req, res) => {
     const { id } = req.params;
     const beer = await beers.find(beer => beer.id === id);
-    // console.log(beer);
-    // res.send(beer);
     res.render('edit', { beer, styles });
 });
 
@@ -69,6 +66,7 @@ app.delete('/beers/:id', async (req, res) => {
     res.redirect('/');
 });
 
+//Updates the beer with new information (when editing/updating)
 app.put('/beers/:id', (req, res) => {
     const { id } = req.params;
     const { name, style, qty, price, description } = req.body;
@@ -79,10 +77,9 @@ app.put('/beers/:id', (req, res) => {
     res.redirect(`/beers/${id}`);
 });
 
-
+//Add a new beer and redirect to index
 app.post('/', (req, res) => {
     //convert qty and price to int?
-    console.log(req.body);
     // req.body.qty = parseInt(req.body.qty);
     const newBeer = req.body;
     beers.push({ ...newBeer, id: getNewID() });
